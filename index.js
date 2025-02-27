@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { getdata } = require('./api.js');
-const uri = 'mongodb://127.0.0.1:27017/intersect';
+const uri = 'mongodb://127.0.0.1:27017/prueba'; //Aqui se especifica el nombre de la base de datos
 
 // Función principal para inicializar la conexión y realizar la inserción
 const main = async () => {
@@ -25,8 +25,8 @@ const main = async () => {
       process.exit(1);
     }
 
-    // Definir el esquema de Intersect
-    const intersectSchema = new mongoose.Schema({
+    // Definir el esquema de la inserción
+    const Schema = new mongoose.Schema({
       ID: { type: String, required: true },
       name: { type: String, required: true },
       dept_name: { type: String, required: true },
@@ -34,17 +34,17 @@ const main = async () => {
     });
 
     // Crear el modelo
-    const Intersect = mongoose.model('Intersect', intersectSchema);
+    const Model = mongoose.model('registro', Schema); //El plural es el nombre de la coleccion
 
     // Insertar los datos en la base de datos
     try {
-      // Verificamos que query.union sea un array
-      if (query && query.union && Array.isArray(query.union) && query.union.length > 0) {
+      // Verificamos que query.resultado sea un array. "resultado" se define en la api de PHP en la clase ManageDB
+      if (query && query.resultado && Array.isArray(query.resultado) && query.resultado.length > 0) {
         // Si union es un array de objetos, insertamos los elementos
-        const result = await Intersect.insertMany(query.union);
+        const result = await Model.insertMany(query.resultado);
         console.log('✅ Datos insertados:', result);
       } else {
-        console.error('❌ Error: No se encontraron datos válidos en "query.union".');
+        console.error('❌ Error: No se encontraron datos válidos en "query.resultado".');
       }
     } catch (e) {
       console.error('❌ Error insertando datos:', e);
