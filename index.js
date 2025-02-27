@@ -25,29 +25,26 @@ const main = async () => {
       process.exit(1);
     }
 
-    // Definir el esquema
+    // Definir el esquema de Intersect
     const intersectSchema = new mongoose.Schema({
-      // Caso 1: Array de objetos
-      intersect: [{
-        edificio: { type: String, required: true }
-      }],
-      // Caso 2: Cadena simple
-      edificio: { type: String }
+      ID: { type: String, required: true },
+      name: { type: String, required: true },
+      dept_name: { type: String, required: true },
+      salary: { type: String, required: true }
     });
 
     // Crear el modelo
     const Intersect = mongoose.model('Intersect', intersectSchema);
 
-    // Insertar datos en la base de datos
+    // Insertar los datos en la base de datos
     try {
-      if (query.intersect && Array.isArray(query.intersect)) {
-        // Si intersect es un array, insertamos los elementos
-        const result = await Intersect.insertMany(query.intersect.map(item => ({ edificio: item })));
+      // Verificamos que query.union sea un array
+      if (query && query.union && Array.isArray(query.union) && query.union.length > 0) {
+        // Si union es un array de objetos, insertamos los elementos
+        const result = await Intersect.insertMany(query.union);
         console.log('✅ Datos insertados:', result);
       } else {
-        // Si intersect no es un array, insertamos como un solo documento
-        const result = await Intersect.create({ edificio: query.intersect });
-        console.log('✅ Documento insertado:', result);
+        console.error('❌ Error: No se encontraron datos válidos en "query.union".');
       }
     } catch (e) {
       console.error('❌ Error insertando datos:', e);
