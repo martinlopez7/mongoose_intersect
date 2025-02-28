@@ -18,6 +18,7 @@
   "description": "",
   "dependencies": {
     "mongoose": "^8.10.1",
+    "mongoose-double": "^0.0.1",
     "node-fetch": "^2.7.0"
   }
 }

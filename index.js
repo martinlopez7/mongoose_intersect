@@ -27,10 +27,10 @@ const main = async () => {
 
     // Definir el esquema de la inserción
     const Schema = new mongoose.Schema({
-      ID: { type: String, required: true },
+      ID: { type: Number, required: true },
       name: { type: String, required: true },
       dept_name: { type: String, required: true },
-      salary: { type: String, required: true }
+      salary: { type: mongoose.Schema.Types.Double, required: true  }
     });
 
     // Crear el modelo
